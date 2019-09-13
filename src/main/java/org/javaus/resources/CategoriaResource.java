@@ -1,10 +1,11 @@
 package org.javaus.resources;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.javaus.domain.Categoria;
+import org.javaus.services.CategoriaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,15 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
 	
+	@Autowired
+	private CategoriaService categoriaService;
+	
 	@GetMapping
-	public List<Categoria> findAll(){
-		Categoria cat1 =  new Categoria(1, "Informatica");
-		Categoria cat2 =  new Categoria(2, "Escritorio");
-		
-		List<Categoria> list = new ArrayList<>();
-		list.addAll(Arrays.asList(cat1, cat2));
+	public  ResponseEntity<List<Categoria>> findAll(){
+		List<Categoria> list = categoriaService.findAll();
 				
-		return list;
+		return ResponseEntity.ok().body(list);
 	}
 
 }

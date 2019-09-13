@@ -1,14 +1,9 @@
 package org.javaus.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 
@@ -18,7 +13,7 @@ public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private Integer id;
+	private String id;
 	private String nome;
 	
 	
@@ -32,18 +27,18 @@ public class Categoria implements Serializable {
 	}
 
 	
-	public Categoria(Integer id, String nome) {
+	public Categoria(String id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
 	}
 
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
