@@ -21,7 +21,7 @@ public class CategoriaService {
 	}
 	
 	
-	public Categoria findByid(String id){
+	public Categoria findById(String id){
 		Optional<Categoria> categoria = categoriaRepositoriy.findById(id);
 		return categoria.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 		
@@ -32,10 +32,23 @@ public class CategoriaService {
 	}
 	
 	public void delete(String id){
-		findByid(id);
+		findById(id);
 		categoriaRepositoriy.deleteById(id);
 	}
 	
+	public Categoria update(Categoria obj){
+	  Categoria newObj = findById(obj.getId());
+	  updateData(newObj, obj);
+	  return categoriaRepositoriy.save(newObj);
+	}
+	
+	
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
+		
+	}
+
+
 	public Categoria fromDTO(CategoriaDTO obj){
   	   return new Categoria(obj.getId(), obj.getNome());
 	}
