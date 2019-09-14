@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.javaus.domain.Categoria;
+import org.javaus.dto.CategoriaDTO;
 import org.javaus.repository.CategoriaRepositoriy;
 import org.javaus.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,15 @@ public class CategoriaService {
 		Optional<Categoria> categoria = categoriaRepositoriy.findById(id);
 		return categoria.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 		
+	}
+	
+	public Categoria insert(Categoria obj){
+		return categoriaRepositoriy.insert(obj);
+	}
+	
+	
+	public Categoria fromDTO(CategoriaDTO obj){
+  	   return new Categoria(obj.getId(), obj.getNome());
 	}
 
 }
