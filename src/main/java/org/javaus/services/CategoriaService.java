@@ -31,9 +31,15 @@ public class CategoriaService {
 		return categoriaRepositoriy.insert(obj);
 	}
 	
+	public void delete(String id){
+		findByid(id);
+		categoriaRepositoriy.deleteById(id);
+	}
 	
 	public Categoria fromDTO(CategoriaDTO obj){
   	   return new Categoria(obj.getId(), obj.getNome());
 	}
+	
+	
 
 }
