@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.javaus.domain.Categoria;
+import org.javaus.domain.Produto;
 import org.javaus.dto.CategoriaDTO;
 import org.javaus.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +36,10 @@ public class CategoriaResource {
 	}
 	
 	
-	
+	// carrega categorias por Id
 	@GetMapping(value="/{id}")
-	public  ResponseEntity<CategoriaDTO> findId(@PathVariable String id){
+	public  ResponseEntity<CategoriaDTO> findById(@PathVariable String id){
 		Categoria obj = categoriaService.findById(id);
-		
 		return ResponseEntity.ok().body(new CategoriaDTO(obj));
 	}
 	
@@ -67,4 +67,14 @@ public class CategoriaResource {
 		return ResponseEntity.noContent().build();	
 		
 	}
+	
+	// Retorna produtos da categoria
+	@GetMapping(value="/{id}/produtos")
+	public  ResponseEntity<List<Produto>> findProdutos(@PathVariable String id){
+		Categoria obj = categoriaService.findById(id);
+		return ResponseEntity.ok().body(obj.getProdutos());
+	}
+	
+
+
 }
