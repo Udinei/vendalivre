@@ -1,10 +1,10 @@
 package org.javaus.repository;
 
-import org.javaus.domain.Categoria;
+import org.javaus.domain.Produto;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CategoriaRepositoriy extends MongoRepository<Categoria, String >  {
+public interface ProdutoRepository extends MongoRepository<Produto, String >  {
 
 }

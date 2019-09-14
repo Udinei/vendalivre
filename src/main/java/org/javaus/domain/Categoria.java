@@ -1,8 +1,11 @@
 package org.javaus.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -16,9 +19,8 @@ public class Categoria implements Serializable {
 	private String id;
 	private String nome;
 	
-	
-	/*@JsonManagedReference 
-	List<Produto> produtos = new ArrayList<>(); */
+ 	@DBRef(lazy=true)
+	private List<Produto> produtos = new ArrayList<>(); 
 	
 	
 	// instancia o objeto sem atribuir nada aos atributos
@@ -51,14 +53,14 @@ public class Categoria implements Serializable {
 	}
 	
 	
-//	public List<Produto> getProdutos() {
-//		return produtos;
-//	}
-//
-//
-//	public void setProdutos(List<Produto> produtos) {
-//		this.produtos = produtos;
-//	}
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
 
 
 	@Override

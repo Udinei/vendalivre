@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.javaus.domain.Categoria;
 import org.javaus.dto.CategoriaDTO;
-import org.javaus.repository.CategoriaRepositoriy;
+import org.javaus.repository.CategoriaRepository;
 import org.javaus.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class CategoriaService {
 	
 	@Autowired
-	private CategoriaRepositoriy categoriaRepositoriy; 
+	private CategoriaRepository categoriaRepositoriy; 
 	
 	public List<Categoria> findAll(){
 		return categoriaRepositoriy.findAll();

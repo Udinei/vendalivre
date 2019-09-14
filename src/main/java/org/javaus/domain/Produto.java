@@ -17,22 +17,16 @@ public class Produto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private Integer id;
+	private String id;
 	private String nome;
 	private Double preco;
-	
-	// @JsonBackReference - E utilizado para evitar a referencia ciclica, informa que os dados
-	// serão recuperados pelo outro lado do relacionamento
-	@JsonBackReference  
-	List<Categoria> categorias = new ArrayList<>();
-		
+			
 	public Produto(){
 		
 	}
-
 	
 	
-	public Produto(Integer id, String nome, Double preco) {
+	public Produto(String id, String nome, Double preco) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -41,11 +35,11 @@ public class Produto implements Serializable {
 
 
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -66,18 +60,6 @@ public class Produto implements Serializable {
 	}
 
 	
-	
-	public List<Categoria> getCategorias() {
-		return categorias;
-	}
-
-
-
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
-	}
-
-
 
 	@Override
 	public int hashCode() {
