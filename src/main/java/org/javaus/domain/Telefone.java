@@ -5,31 +5,27 @@ import java.io.Serializable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
-
 @Document
-public class Produto implements Serializable {
+public class Telefone implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	private String id;
-	private String nome;
-	private Double preco;
+	private String numero;
+
+	public Telefone() {
 	
-	
-	
-	public Produto(){
-		
 	}
 	
 	
-	public Produto(String id, String nome, Double preco) {
+
+	public Telefone(String id, String numero) {
 		super();
 		this.id = id;
-		this.nome = nome;
-		this.preco = preco;
+		this.numero = numero;
 	}
+
 
 
 	public String getId() {
@@ -40,23 +36,13 @@ public class Produto implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getNumero() {
+		return numero;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
-
-	public Double getPreco() {
-		return preco;
-	}
-
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
-
-
 
 	@Override
 	public int hashCode() {
@@ -74,7 +60,7 @@ public class Produto implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Produto other = (Produto) obj;
+		Telefone other = (Telefone) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -82,7 +68,7 @@ public class Produto implements Serializable {
 			return false;
 		return true;
 	}
-
+	
 	
 	
 }

@@ -1,34 +1,37 @@
 package org.javaus.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Document
-public class Produto implements Serializable {
+public class Estado implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	private String id;
 	private String nome;
-	private Double preco;
+    	
+	@JsonBackReference
+    @DBRef
+	List<Cidade> cidades = new ArrayList<>();
 	
+	public Estado() {
 	
-	
-	public Produto(){
-		
 	}
 	
 	
-	public Produto(String id, String nome, Double preco) {
+	public Estado(String id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.preco = preco;
 	}
 
 
@@ -47,15 +50,16 @@ public class Produto implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public Double getPreco() {
-		return preco;
+	
+		
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
 
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
+	}
 
 
 	@Override
@@ -66,6 +70,8 @@ public class Produto implements Serializable {
 		return result;
 	}
 
+
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -74,7 +80,7 @@ public class Produto implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Produto other = (Produto) obj;
+		Estado other = (Estado) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -83,6 +89,6 @@ public class Produto implements Serializable {
 		return true;
 	}
 
-	
-	
+
+
 }

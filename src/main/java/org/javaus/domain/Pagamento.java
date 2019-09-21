@@ -2,60 +2,54 @@ package org.javaus.domain;
 
 import java.io.Serializable;
 
+import org.javaus.domain.enums.EstadoPagamento;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 
-
-@Document
-public class Produto implements Serializable {
-
+public abstract class Pagamento implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private String id;
-	private String nome;
-	private Double preco;
+	private Integer id;
+	private Integer estado;
 	
-	
-	
-	public Produto(){
+	private Pedido pedido;
+	 
 		
+	public Pagamento() {
+	
 	}
-	
-	
-	public Produto(String id, String nome, Double preco) {
+		
+
+	public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
 		super();
 		this.id = id;
-		this.nome = nome;
-		this.preco = preco;
+		this.estado = estado.getCod();
+		this.pedido = pedido;
 	}
 
 
-	public String getId() {
+
+	public Integer getId() {
 		return id;
 	}
-
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public String getNome() {
-		return nome;
+	public EstadoPagamento getEstado() {
+		return EstadoPagamento.toEnum(estado);
 	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setEstado(EstadoPagamento estado) {
+		this.estado = estado.getCod();
 	}
-
-	public Double getPreco() {
-		return preco;
+	public Pedido getPedido() {
+		return pedido;
 	}
-
-	public void setPreco(Double preco) {
-		this.preco = preco;
+	
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
-
 
 
 	@Override
@@ -66,6 +60,7 @@ public class Produto implements Serializable {
 		return result;
 	}
 
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -74,7 +69,7 @@ public class Produto implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Produto other = (Produto) obj;
+		Pagamento other = (Pagamento) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -82,7 +77,7 @@ public class Produto implements Serializable {
 			return false;
 		return true;
 	}
+	
+	
 
-	
-	
 }

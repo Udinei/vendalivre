@@ -3,33 +3,38 @@ package org.javaus.domain;
 import java.io.Serializable;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Document
-public class Produto implements Serializable {
-
+public class Cidade implements Serializable {
+	
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	private String id;
 	private String nome;
-	private Double preco;
 	
 	
+	@JsonManagedReference
+	@DBRef
+	private Estado estado; 
 	
-	public Produto(){
-		
+	public Cidade() {
+	
 	}
-	
-	
-	public Produto(String id, String nome, Double preco) {
+
+		
+	public Cidade(String id, String nome, Estado estado) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.preco = preco;
+		this.estado = estado;
 	}
+
 
 
 	public String getId() {
@@ -48,14 +53,15 @@ public class Produto implements Serializable {
 		this.nome = nome;
 	}
 
-	public Double getPreco() {
-		return preco;
+	
+	public Estado getEstado() {
+		return estado;
 	}
 
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
 
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
 
 
 	@Override
@@ -74,7 +80,7 @@ public class Produto implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Produto other = (Produto) obj;
+		Cidade other = (Cidade) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -82,7 +88,7 @@ public class Produto implements Serializable {
 			return false;
 		return true;
 	}
+	
+	
 
-	
-	
 }
