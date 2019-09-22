@@ -1,9 +1,14 @@
 package org.javaus.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 
@@ -17,7 +22,11 @@ public class Produto implements Serializable {
 	private String nome;
 	private Double preco;
 	
-	
+	// @JsonBackReference/@JsonManageReference - E utilizado para evitar a referencia ciclica, informa que os dados
+	// serão recuperados pelo outro lado do relacionamento
+	@JsonBackReference
+	@DBRef(lazy=true)
+	List<Categoria> categorias = new ArrayList<>();
 	
 	public Produto(){
 		
@@ -55,7 +64,16 @@ public class Produto implements Serializable {
 	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
+ 
 
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
+	}
 
 
 	@Override

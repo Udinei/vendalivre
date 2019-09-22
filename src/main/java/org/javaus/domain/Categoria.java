@@ -8,6 +8,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 
 @Document
@@ -19,6 +22,7 @@ public class Categoria implements Serializable {
 	private String id;
 	private String nome;
 	
+	@JsonManagedReference
  	@DBRef(lazy=true)
 	private List<Produto> produtos = new ArrayList<>(); 
 	

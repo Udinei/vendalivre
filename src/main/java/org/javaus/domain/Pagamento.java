@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import org.javaus.domain.enums.EstadoPagamento;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 public abstract class Pagamento implements Serializable {
@@ -11,9 +15,11 @@ public abstract class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private Integer id;
+	private String id;
 	private Integer estado;
-	
+		
+    @JsonBackReference
+	@DBRef
 	private Pedido pedido;
 	 
 		
@@ -22,7 +28,7 @@ public abstract class Pagamento implements Serializable {
 	}
 		
 
-	public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
+	public Pagamento(String id, EstadoPagamento estado, Pedido pedido) {
 		super();
 		this.id = id;
 		this.estado = estado.getCod();
@@ -31,10 +37,10 @@ public abstract class Pagamento implements Serializable {
 
 
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public EstadoPagamento getEstado() {

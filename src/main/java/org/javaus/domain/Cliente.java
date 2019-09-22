@@ -9,6 +9,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+
 @Document
 public class Cliente implements Serializable{
 
@@ -20,15 +25,17 @@ public class Cliente implements Serializable{
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
-
 	
     
 	@DBRef
 	private List<Endereco> enderecos = new ArrayList<>();
-
 	
 	@DBRef
 	private List<Telefone> telefones = new ArrayList<>();
+	
+	@JsonBackReference
+	@DBRef
+	private List<Pedido> pedidos = new ArrayList<>();
 	
 
 	public Cliente() {
@@ -78,8 +85,7 @@ public class Cliente implements Serializable{
 		this.tipo = tipo.getCod();
 	}
 
-	
-	
+		
 	public String getEmail() {
 		return email;
 	}
@@ -115,7 +121,14 @@ public class Cliente implements Serializable{
 		this.tipo = tipo;
 	}
 
-    
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
 	
 	@Override
 	public int hashCode() {

@@ -4,7 +4,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Document
 public class Pedido implements Serializable {
@@ -12,23 +18,29 @@ public class Pedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private Integer id;
+	private String id;
+	
+	@JsonFormat(pattern="dd/MM/yyyy H:mm")
 	private Date instante;
 	
-	
+	@JsonManagedReference
+	@DBRef	
 	private Pagamento pagamento;
-		
-	private Cliente cliente;
-		
+	
+	@DBRef
 	private Endereco enderecoDeEntrega;
 	
+	@JsonManagedReference
+	@DBRef
+	private Cliente cliente;
 	
+		
 	public Pedido() {
 	
 	}
 	
 	
-	public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
+	public Pedido(String id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
 		super();
 		this.id = id;
 		this.instante = instante;
@@ -37,27 +49,34 @@ public class Pedido implements Serializable {
 	}
 
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	
+	public void setId(String id) {
 		this.id = id;
 	}
+	
 	public Date getInstante() {
 		return instante;
 	}
+	
 	public void setInstante(Date instante) {
 		this.instante = instante;
 	}
+	
 	public Pagamento getPagamento() {
 		return pagamento;
 	}
+	
 	public void setPagamento(Pagamento pagamento) {
 		this.pagamento = pagamento;
 	}
+	
 	public Cliente getCliente() {
 		return cliente;
 	}
+	
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
