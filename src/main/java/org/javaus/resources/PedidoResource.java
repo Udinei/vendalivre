@@ -1,8 +1,14 @@
 package org.javaus.resources;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.assertj.core.util.Arrays;
+import org.javaus.domain.ItemPedido;
 import org.javaus.domain.Pagamento;
 import org.javaus.domain.Pedido;
 import org.javaus.dto.PedidoDTO;
+import org.javaus.services.ItemPedidoService;
 import org.javaus.services.PagamentoService;
 import org.javaus.services.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +28,14 @@ public class PedidoResource {
 	@Autowired
 	PagamentoService pagamentoService;	
 	
+	@Autowired
+	ItemPedidoService itemPedidoService;
+	
 	//@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	@GetMapping(value="/{id}")
 	public ResponseEntity<PedidoDTO> find(@PathVariable String id){
 		Pedido obj = pedidoService.find(id);
-		Pagamento pagamento = pagamentoService.findByPedidoId(obj.getId());
-		//System.out.println("Pag..."+ pag.getClass());
-		obj.setPagamento(pagamento);
 		return ResponseEntity.ok().body(new PedidoDTO(obj));
+		
 	}
 }

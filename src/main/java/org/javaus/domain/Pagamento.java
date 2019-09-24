@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 public abstract class Pagamento implements Serializable {
@@ -18,8 +19,8 @@ public abstract class Pagamento implements Serializable {
 	private String id;
 	private Integer estado;
 		
-    @JsonBackReference
-	@DBRef
+	@JsonBackReference
+	@DBRef	
 	private Pedido pedido;
 	 
 		

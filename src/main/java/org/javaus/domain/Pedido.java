@@ -2,14 +2,14 @@ package org.javaus.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Document
@@ -24,7 +24,6 @@ public class Pedido implements Serializable {
 	private Date instante;
 	
 	@JsonManagedReference
-	@DBRef	
 	private Pagamento pagamento;
 	
 	@DBRef
@@ -33,12 +32,9 @@ public class Pedido implements Serializable {
 	@JsonManagedReference
 	@DBRef
 	private Cliente cliente;
-	
-		
-	public Pedido() {
-	
-	}
-	
+
+	@DBRef(lazy=true)
+	private Set<ItemPedido> itens = new HashSet<>();
 	
 	public Pedido(String id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
 		super();
@@ -46,9 +42,9 @@ public class Pedido implements Serializable {
 		this.instante = instante;
 		this.cliente = cliente;
 		this.enderecoDeEntrega = enderecoDeEntrega;
+		
 	}
-
-
+	
 	public String getId() {
 		return id;
 	}
@@ -89,6 +85,16 @@ public class Pedido implements Serializable {
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 	
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -96,6 +102,7 @@ public class Pedido implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

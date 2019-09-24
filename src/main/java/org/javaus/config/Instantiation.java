@@ -10,6 +10,7 @@ import org.javaus.domain.Cidade;
 import org.javaus.domain.Cliente;
 import org.javaus.domain.Endereco;
 import org.javaus.domain.Estado;
+import org.javaus.domain.ItemPedido;
 import org.javaus.domain.Pagamento;
 import org.javaus.domain.PagamentoComBoleto;
 import org.javaus.domain.PagamentoComCartao;
@@ -23,6 +24,7 @@ import org.javaus.repository.CidadeRepository;
 import org.javaus.repository.ClienteRepository;
 import org.javaus.repository.EnderecoRepository;
 import org.javaus.repository.EstadoRepository;
+import org.javaus.repository.ItemPedidoRepository;
 import org.javaus.repository.PagamentoRepository;
 import org.javaus.repository.PedidoRepository;
 import org.javaus.repository.ProdutoRepository;
@@ -61,6 +63,9 @@ public class Instantiation implements CommandLineRunner {
 
     @Autowired
     private PagamentoRepository pagamentoRepository;
+    
+    @Autowired
+    private ItemPedidoRepository itemPedidoRepository;
 
     
 	@Override
@@ -68,30 +73,6 @@ public class Instantiation implements CommandLineRunner {
 		gravaDadoBD();
 	
 	}
-	
-
-	private void categoriaAndProduto() {
-		Categoria cat1 = new Categoria(null, "Informática");
-		Categoria cat2 = new Categoria(null, "Escritório");
-			
-		Produto p1 = new Produto(null, "Computador", 2000.00);
-		Produto p2 = new Produto(null, "Impressora", 2000.00);
-		Produto p3 = new Produto(null, "Mouse", 2000.00);
-			
-		p1.getCategorias().addAll(Arrays.asList(cat1));
-		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
-		p3.getCategorias().addAll(Arrays.asList(cat1));
-		
-		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
-		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
-		
-		cat1.getProdutos().addAll(Arrays.asList(p1,p2,p3));
-		cat2.getProdutos().addAll(Arrays.asList(p2));
-		
-		//  salvando categorias 
-		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
-	}
-
 	
 	private void limpaBD() {
 		categoriaRepository.deleteAll();
@@ -107,7 +88,27 @@ public class Instantiation implements CommandLineRunner {
 	
 	private void gravaDadoBD() throws ParseException{
 		limpaBD();
-		categoriaAndProduto();
+				
+		Categoria cat1 = new Categoria(null, "Informática");
+		Categoria cat2 = new Categoria(null, "Escritório");
+			
+		Produto p1 = new Produto(null, "Computador", 2000.00);
+		Produto p2 = new Produto(null, "Impressora", 800.00);
+		Produto p3 = new Produto(null, "Mouse", 80.00);
+			
+		p1.getCategorias().addAll(Arrays.asList(cat1));
+		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
+		p3.getCategorias().addAll(Arrays.asList(cat1));
+		
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
+		
+		cat1.getProdutos().addAll(Arrays.asList(p1,p2,p3));
+		cat2.getProdutos().addAll(Arrays.asList(p2));
+		
+		//  salvando categorias 
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+		
 				
 		Estado est1 = new Estado(null, "Minas Gerais");
 		Estado est2 = new Estado(null, "São Paulo");
@@ -147,7 +148,7 @@ public class Instantiation implements CommandLineRunner {
 		
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		
+		 
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
 		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 10:32"), cli1, e2);
 		
@@ -165,6 +166,24 @@ public class Instantiation implements CommandLineRunner {
 		clienteRepository.saveAll (Arrays.asList(cli1));
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		
+		ItemPedido ip1 = new ItemPedido(null, ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(null, ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(null, ped2, p2, 100.00, 1, 800.00);
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		//ped1.getItensPedido().addAll(Arrays.asList(ip1, ip2));
+		//ped2.getItensPedido().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 	}
 	
 }

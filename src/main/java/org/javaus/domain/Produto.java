@@ -2,13 +2,16 @@ package org.javaus.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 
@@ -28,22 +31,26 @@ public class Produto implements Serializable {
 	@DBRef(lazy=true)
 	List<Categoria> categorias = new ArrayList<>();
 	
+	@JsonManagedReference
+	@DBRef
+	private Set<ItemPedido> itens = new HashSet<>();
+	
 	public Produto(){
 		
 	}
-	
 	
 	public Produto(String id, String nome, Double preco) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
+		
 	}
-
 
 	public String getId() {
 		return id;
 	}
+
 
 	public void setId(String id) {
 		this.id = id;
@@ -75,6 +82,17 @@ public class Produto implements Serializable {
 		this.categorias = categorias;
 	}
 
+	
+
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -101,6 +119,4 @@ public class Produto implements Serializable {
 		return true;
 	}
 
-	
-	
 }

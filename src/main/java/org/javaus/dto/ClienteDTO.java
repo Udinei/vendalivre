@@ -23,9 +23,9 @@ public class ClienteDTO implements Serializable {
 	
 	private List<Telefone> telefones = new ArrayList<>();
 		
-//	public ClienteDTO() {
-//	
-//	}
+	public ClienteDTO() {
+	
+	}
 	
 	public ClienteDTO(Cliente cliente) {
 		this.id = cliente.getId();

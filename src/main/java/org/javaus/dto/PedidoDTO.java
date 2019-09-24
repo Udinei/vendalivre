@@ -1,14 +1,20 @@
 package org.javaus.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.javaus.domain.Cliente;
 import org.javaus.domain.Endereco;
+import org.javaus.domain.ItemPedido;
 import org.javaus.domain.Pagamento;
 import org.javaus.domain.Pedido;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 public class PedidoDTO implements Serializable {
@@ -25,8 +31,11 @@ public class PedidoDTO implements Serializable {
 	private Endereco enderecoDeEntrega;
 	
 	private Cliente cliente;
-	
 		
+	private Set<ItemPedido> itens = new HashSet<>();
+	
+	//private List<ItemPedido> itensPedido = new ArrayList<>();
+	
 	public PedidoDTO() {
 	
 	}
@@ -37,13 +46,24 @@ public class PedidoDTO implements Serializable {
 		this.id = pedido.getId();
 		this.instante = pedido.getInstante();
 		this.cliente = pedido.getCliente();
+	    	cliente.setEnderecos(null);
 		this.pagamento = pedido.getPagamento();
-		System.out.println("Pagamento.... " + pedido.getPagamento());
-  		this.enderecoDeEntrega = pedido.getEnderecoDeEntrega();
+		this.enderecoDeEntrega = pedido.getEnderecoDeEntrega();
+		this.itens = pedido.getItens();
+		//this.itensPedido = pedido.getItensPedido();
+  		
 	}
 
-  
-    
+//	// criado uma lista de itens do pedido
+//	@JsonIgnore
+//	public List<Pedido> getPedidos(){
+//		List<Pedido> lista = new ArrayList<>();
+//		for(ItemPedido x : itens){
+//			lista.add(x.getPedido());
+//		}
+//		return lista;
+//	}
+	
 	public String getId() {
 		return id;
 	}
@@ -84,5 +104,22 @@ public class PedidoDTO implements Serializable {
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 	
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
+//
+//
+//	public List<ItemPedido> getItensPedido() {
+//		return itensPedido;
+//	}
+//
+//
+//	public void setItensPedido(List<ItemPedido> itensPedido) {
+//		this.itensPedido = itensPedido;
+//	}
 	
 }
